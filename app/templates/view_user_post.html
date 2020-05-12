@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <div class="container">
+        <a href="{{url_for('main.index')}}">
+                <button type="button" class="btn btn-primary btn-sm" style="margin-bottom:10px;">
+                        <span class="glyphicon glyphicon-chevron-left" ></span> Back
+                </button>
+        </a>
+    <div class="container">
+        <h1 class="text-center mb-2">{{user.blog.count()}} Posts by {{ user.username }} </h1>
+        <div class="row">
+            <div class="col-md-2">   
+            </div>
+            <div class="col-md-8">
+                {% for blog in blogs %}
+                    <div class="bg mb-2" >
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>By <span style="color: black">{{blog.user.username}}</span>  on {{blog.posted.strftime('%d-%m-%Y')}}</p>
+                                <h3>Tittle: <a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title}}</a></h3>
+                                <p>{{blog.blogc}}</p>
+                                <p>{{blog.comment.count()}} Comments</p>
+    
+                            </div>
+                            <div class="col-md-4">
+                                <form class="form-inline" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">
+                                    <div class="md-form form-group">
+                                        <label for="form92">Enter your comment</label>
+                                        <input type="text"  class="form-control"name ="newcomment" required>
+                                    </div>
+                                    <div class="md-form form-group">
+                                        <button class="btn btn-sm btn-outline-info">Add a Comment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>  
+                        <hr> 
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

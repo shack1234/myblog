@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='CSS/inde.css')}}">
+{% endblock %}
+{% block content %}
+   <div class="col-md-12 " ><h1 style="text-align:center;font-size:20px">Welcome to Mblog your journey of writing starts here</h1></div>
+    <div class="container landing-content">
+        <div class="row">
+            <div class="col-md-7" style="color:gray;">
+                {% for blog in blogs %}
+                    <div class="list-group list-group-flush">
+                        <hr>
+                        <div class="row ">
+                            <div class="col-md-2 ">
+                                    <p id="usern"><a href="{{url_for('main.user_posts',username = blog.user.username)}}"><span  style="color: black"><strong>{{blog.user.username|title}}</strong></span> </a> </p> 
+                            </div>
+                            <div class="col-md-10 pr-4 d-justify userblog">
+                                <p>Posted on : {{blog.posted.strftime('%d-%m-%Y-%I:%M %p')}}</p>
+                                <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
+                                <p style="color:maroon">{{blog.blogc[:70]}}...</p>
+                                <p> <a class="btn btn-sm btn-info" href="{{url_for('main.blog',id = blog.id)}}" >Read more</a> {{blog.comment.count()}} Comments</p>
+                            </div>
+                        </div> 
+                        <hr>
+                    </div>
+                {% endfor %}
+        </div>
+               <div class="col-md-5">
+                      <hr>
+                    <h3 style="text-align:center">Quote of the day</h3>
+                    <blockquote class="blockquote">
+                        <p class="mb-0"> “ {{quote.quote|capitalize}}.”</p>
+                    <footer > {{quote.author|capitalize}}</footer>
+                    </blockquote>
+                     <hr>
+                      {% for message in get_flashed_messages() %}
+                        <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                        </div>
+                        {% endfor %}
+                     <br><br>
+                    <div > Subscribe below to receive updates every time a new blog is posted</div>
+                    <br>
+                    <form  action="{{url_for('main.subscribe')}}" method="POST">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email"  name ="subscriber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                 </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,8 +3,7 @@
 
 ---
 
-
-#### Myblog is an applicationthat allows authors to create a blog and post it so that other people can view it and comment
+ Myblog is an applicationthat allows authors to create a blog and post it so that other people can view it and comment
 
 
 ---
